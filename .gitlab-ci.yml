@@ -1,0 +1,23 @@
+stages:
+  - build
+  - deploy
+  - notify
+
+variables:
+  BUILD_DIR: 'dist'
+
+build:
+  only:
+    refs:
+      - master
+  tags: [front]
+  stage: build
+  script:
+    - npm ci
+    - npm run check
+    - npm run build
+  artifacts:
+    paths:
+      - $BUILD_DIR
+    expire_in: 20 minutes
+
